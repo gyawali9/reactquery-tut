@@ -4,16 +4,24 @@ import axios from "axios";
 const SuperHeroesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [error, setError] = useState("");
   useEffect(() => {
-    axios.get("http://localhost:4000/superheroes").then((res) => {
-      // console.log(res.data);
-      setData(res.data);
-      setIsLoading(false);
-      console.log(data);
-    });
+    axios
+      .get("http://localhost:4000/superheroe")
+      .then((res) => {
+        setData(res.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
   }, []);
   if (isLoading) {
     return <h2>Loading...</h2>;
+  }
+  if (error) {
+    return <h2>{error}</h2>;
   }
 
   return (
